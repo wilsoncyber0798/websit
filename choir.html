@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siloam Choir ADEP Kabuga</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.prod.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #39a064;
+      --secondary-color: #f0c040;
+      --text-color: #333;
+      --light-bg: #f9f9f9;
+      --border-color: #ddd;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--light-bg);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(248, 77, 77, 0.74);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 20px;
+    }
+    
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+    
+    nav ul li a:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1200/400') center/cover no-repeat;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 0 20px;
+    }
+    
+    .hero h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin-bottom: 30px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--secondary-color);
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #e0b030;
+    }
+    
+    main {
+      padding: 40px 0;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .news-card {
+      background-color: white;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    
+    .news-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .news-image {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+    }
+    
+    .news-content {
+      padding: 15px;
+    }
+    
+    .news-date {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+    
+    .news-card h3 {
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .news-card p {
+      margin-bottom: 15px;
+      color: #555;
+    }
+    
+    .read-more {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .read-more:hover {
+      text-decoration: underline;
+    }
+    
+    .videos-section {
+      margin-bottom: 40px;
+    }
+    
+    .video-container {
+      background-color: #000;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .video-embed {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    
+    .video-embed img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .video-info {
+      padding: 15px;
+      background-color: white;
+    }
+    
+    .video-info h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .about-content h2 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+    
+    .about-content p {
+      margin-bottom: 15px;
+    }
+    
+    .about-image {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+    
+    .events-section {
+      margin-bottom: 40px;
+    }
+    
+    .event-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .event-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+    
+    .event-date {
+      background-color: var(--secondary-color);
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      min-width: 80px;
+    }
+    
+    .event-date .day {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .event-title {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    .event-details {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .detail-label {
+      font-weight: bold;
+      color: #666;
+    }
+    
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 40px 0 20px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-section h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 10px;
+    }
+    
+    .contact-info {
+      list-style: none;
+    }
+    
+    .contact-info li {
+      margin-bottom: 10px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--secondary-color);
+    }
+    
+    .quick-links {
+      list-style: none;
+    }
+    
+    .quick-links li {
+      margin-bottom: 10px;
+    }
+    
+    .quick-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .quick-links a:hover {
+      color: var(--secondary-color);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .logo {
+        margin-bottom: 15px;
+      }
+      
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      nav ul li {
+        margin: 10px 0;
+      }
+      
+      .about-section {
+        grid-template-columns: 1fr;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-menu {
+        display: none;
+        width: 100%;
+      }
+      
+      .nav-menu.active {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="container header-content">
+        <div class="logo">
+          <img src="/api/placeholder/50/50" alt="Siloam Choir Logo">
+          <h1>Siloam Choir ADEP Kabuga</h1>
+        </div>
+        <button class="mobile-menu-btn" @click="toggleMenu">☰</button>
+        <nav :class="{ 'nav-menu': true, 'active': menuActive }">
+          <ul>
+            <li v-for="link in navLinks" :key="link.id">
+              <a :href="link.url" @click.prevent="setActivePage(link.id)">{{ link.text }}</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <component :is="activePage"></component>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <ul class="contact-info">
+              <li>ADEP Kabuga, Rwanda</li>
+              <li>Phone: +250 78 000 0000</li>
+              <li>Email: info@siloamchoir.rw</li>
+            </ul>
+            <div class="social-links">
+              <a href="https://www.facebook.com/" target="_blank" rel="noopener">FB</a>
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener">IG</a>
+              <a href="https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx" target="_blank" rel="noopener">YT</a>
+            </div>
+          </div>
+          
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="quick-links">
+              <li v-for="link in navLinks" :key="link.id">
+                <a :href="link.url" @click.prevent="setActivePage(link.id)">{{ link.text }}</a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="footer-section">
+            <h3>About Siloam Choir</h3>
+            <p>A Seventh-day Adventist choir from ADEP Kabuga Church. We sing to praise God and glorify His name.</p>
+          </div>
+        </div>
+        
+        <div class="copyright">
+          <p>&copy; {{ new Date().getFullYear() }} Siloam Choir ADEP Kabuga. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const { createApp, ref, computed } = Vue;
+    
+    // Component pages
+    const HomePage = {
+      template: `
+        <div>
+          <section class="hero">
+            <h2>Siloam Choir ADEP Kabuga</h2>
+            <p>Called to Praise God Through Music</p>
+            <a href="#events" class="btn" @click.prevent="$parent.setActivePage('events')">View Upcoming Events</a>
+          </section>
+          
+          <main class="container">
+            <section class="news-section">
+              <h2 class="section-title">Latest News</h2>
+              <div class="news-grid">
+                <div class="news-card" v-for="news in latestNews" :key="news.id">
+                  <img :src="news.image" alt="News Image" class="news-image">
+                  <div class="news-content">
+                    <div class="news-date">{{ news.date }}</div>
+                    <h3>{{ news.title }}</h3>
+                    <p>{{ news.excerpt }}</p>
+                    <a href="https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx" target="_blank" rel="noopener" class="read-more">Read More</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+            
+            <section class="videos-section">
+              <h2 class="section-title">Our Music</h2>
+              <div class="video-container">
+                <div class="video-embed">
+                  <img src="/api/placeholder/800/450" alt="Video Thumbnail">
+                </div>
+                <div class="video-info">
+                  <h3>Nzakumbakumba Live Concert</h3>
+                  <p>Our major concert held in December 2024.</p>
+                </div>
+              </div>
+            </section>
+            
+            <section class="events-section">
+              <h2 class="section-title">Upcoming Events</h2>
+              <div class="event-card">
+                <div class="event-header">
+                  <div class="event-date">
+                    <div class="day">15</div>
+                    <div class="month">May</div>
+                  </div>
+                  <h3 class="event-title">"Light Will Come" Concert</h3>
+                </div>
+                <div class="event-details">
+                  <div class="detail-label">Time:</div>
+                  <div>15:00 - 18:00</div>
+                  <div class="detail-label">Location:</div>
+                  <div>ADEP Kabuga</div>
+                </div>
+                <p>You are all invited to our major concert "Light Will Come" where we will sing songs praising God.</p>
+                <a href="https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx" target="_blank" rel="noopener" class="btn">Register</a>
+              </div>
+            </section>
+          </main>
+        </div>
+      `
+    };
+    
+    const AboutPage = {
+      template: `
+        <main class="container">
+          <h2 class="section-title">About Siloam Choir</h2>
+          
+          <section class="about-section">
+            <div class="about-content">
+              <h2>Who We Are</h2>
+              <p>Siloam Choir is A Derp choir from ADEP Kabuga Church. We began in 2010 with the mission to praise God and spread the gospel through music.</p>
+              <p>The name "Siloam" comes from the Pool of Siloam mentioned in the Bible, where Jesus told a blind man to wash and he was healed. As our name suggests, our goal is to create music that heals the soul and shares the light of Jesus in the world.</p>
+              <p>Our choir consists of 40 talented singers with diverse gifts. We have both female and male voices. We also have musicians who play various instruments.</p>
+              <p>We sing various types of songs: traditional, Rwandan, and international. We all work together to glorify God's name.</p>
+            </div>
+            <img src="https://yt3.googleusercontent.com/KwIr4iZrO8jOUvGt4qBz75KcqzMRW8ssAZhohRbQNtGwMjAKUry017kZ8CGQevFl2suT9IvpaYk=s160-c-k-c0x00ffffff-no-rj">
+          </section>
+          
+          <section class="about-section">
+            <img src="https://scontent.fkgl4-1.fna.fbcdn.net/v/t39.30808-1/495213812_656106973897948_5477093204341617752_n.jpg?stp=c0.96.1024.1024a_dst-jpg_s200x200_tt6&_nc_cat=107&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFFe8T4QOgWljdcb8wJCbyo9i04TdO33UT2LThN07fdRO3gsH52LfOG_cw4ovT9lsuL4_SPV0ElTBycn3eMroJ_&_nc_ohc=CDv5uqLKALEQ7kNvwH2HDBt&_nc_oc=Adnt1UYHlbu8q7_sh-VSLF1xIfNjvjWUlCHihqcxPsPmlE9Z9uMGddAXC0GHcxRBwDo&_nc_zt=24&_nc_ht=scontent.fkgl4-1.fna&_nc_gid=OhnVZUoN-ccBMwGr4g-lRA&oh=00_AfGxVAY3aOeJ6d5rLG7glJibtsCuWZ9ZAiTw5LOnUjxDtA&oe=681C40BD">
+            <div class="about-content">
+              <h2>Our Mission</h2>
+              <p>Our mission is to praise God and spread the gospel through music. We want our songs to be a blessing to listeners and remind them of God's greatness and love.</p>
+              <p>We work together to honor God with love and unity. We believe that music is a powerful way to preach and testify about God.</p>
+              <p>We strive for each choir member to grow in their gift and in their relationship with God. We are not just singers, but also missionaries through music.</p>
+            </div>
+          </section>
+          
+          <section>
+            <h2 class="section-title">Choir Leadership</h2>
+            <div class="news-grid">
+              <div class="news-card">
+                <img src="https://yt3.googleusercontent.com/ZIAHc1nMYAvHUiwVEBCJkCQvaG5Ns7wTbbrEJaiU3n0Kki72PbXfMAt3nQRVevivFCHylo8q=w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj">
+                <div class="news-content">
+                  <h3>John Mugisha</h3>
+                  <p>Choir Director</p>
+                </div>
+              </div>
+              <div class="news-card">
+                <img src="https://yt3.googleusercontent.com/ZIAHc1nMYAvHUiwVEBCJkCQvaG5Ns7wTbbrEJaiU3n0Kki72PbXfMAt3nQRVevivFCHylo8q=w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj ">
+                <div class="news-content">
+                  <h3>Marie Uwase</h3>
+                  <p>Assistant Director</p>
+                </div>
+              </div>
+              <div class="news-card">
+                <img src="https://yt3.googleusercontent.com/ZIAHc1nMYAvHUiwVEBCJkCQvaG5Ns7wTbbrEJaiU3n0Kki72PbXfMAt3nQRVevivFCHylo8q=w1138-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj">
+                <div class="news-content">
+                  <h3>Peter Ndayisenga</h3>
+                  <p>Lead Musician</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      `
+    };
+    
+    const VideosPage = {
+      template: `
+        <main class="container">
+          <h2 class="section-title">Our Videos</h2>
+          
+          <div class="news-grid">
+            <div class="news-card" v-for="video in videos" :key="video.id">
+              <img :src="video.thumbnail" alt="Video Thumbnail" class="news-image">
+              <div class="news-content">
+                <h3>{{ video.title }}</h3>
+                <p>{{ video.description }}</p>
+                <div class="news-date">{{ video.date }}</div>
+                <a :href="video.url" class="read-more" target="_blank" rel="noopener">Watch Video</a>
+              </div>
+            </div>
+          </div>
+        </main>
+      `
+    };
+    
+    const EventsPage = {
+      template: `
+        <main class="container">
+          <h2 class="section-title">Upcoming Events</h2>
+          
+          <div class="event-card" v-for="event in events" :key="event.id">
+            <div class="event-header">
+              <div class="event-date">
+                <div class="day">{{ event.day }}</div>
+                <div class="month">{{ event.month }}</div>
+              </div>
+              <h3 class="event-title">{{ event.title }}</h3>
+            </div>
+            <div class="event-details">
+              <div class="detail-label">Time:</div>
+              <div>{{ event.time }}</div>
+              <div class="detail-label">Location:</div>
+              <div>{{ event.location }}</div>
+            </div>
+            <p>{{ event.description }}</p>
+            <a href="https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx" target="_blank" rel="noopener" class="btn">Register</a>
+          </div>
+        </main>
+      `
+    };
+    
+    const ContactPage = {
+      template: `
+        <main class="container">
+          <h2 class="section-title">Contact Us</h2>
+          
+          <div class="about-section">
+            <div class="about-content">
+              <h3>Our Contact Information</h3>
+              <p>Have a question or want to know more? Contact us at:</p>
+              <ul class="contact-info">
+                <li>ADEP Kabuga, Rwanda</li>
+                <li>Phone: +250 78 000 0000</li>
+                <li>Email: info@siloamchoir.rw</li>
+              </ul>
+              
+              <h3 class="mt-4">Follow Us on Social Media</h3>
+              <div class="social-links">
+                <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx" target="_blank" rel="noopener">YouTube</a>
+              </div>
+              
+              <h3 class="mt-4">Support Us</h3>
+              <p>If you wish to support our ministry of praising God through music, you can help us in the following ways:</p>
+              <ul>
+                <li>Share our music with others</li>
+                <li>Pray for us</li>
+                <li>Donate</li>
+              </ul>
+            </div>
+            
+            <div>
+              <form @submit.prevent="submitForm" class="contact-form">
+                <div class="form-group">
+                  <label for="name">Your Name</label>
+                  <input type="text" id="name" v-model="contactForm.name" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="email">Your Email</label>
+                  <input type="email" id="email" v-model="contactForm.email" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="subject">Subject</label>
+                  <input type="text" id="subject" v-model="contactForm.subject" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea id="message" v-model="contactForm.message" rows="5" required></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Send Message</button>
+              </form>
+            </div>
+          </div>
+        </main>
+      `
+    };
+    
+    const app = createApp({
+      setup() {
+        const currentPage = ref('home');
+        const menuActive = ref(false);
+        
+        const navLinks = [
+          { id: 'home', text: 'Home', url: '#home' },
+          { id: 'about', text: 'About Us', url: '#about' },
+          { id: 'videos', text: 'Our Videos', url: '#videos' },
+          { id: 'events', text: 'Events', url: '#events' },
+          { id: 'contact', text: 'Contact', url: '#contact' }
+        ];
+        
+        // Sample data
+        const latestNews = [
+          {
+            id: 1,
+            title: 'Siloam Choir Organizing Major Concert "Nzakumbakumba Live Concert"',
+            excerpt: 'The well-known choir from ADEP Kabuga Church, Siloam Choir, is organizing a major concert to be held on Sunday, December 25, 2024.',
+            date: 'April 12, 2025',
+            image: '/api/placeholder/400/300'
+          },
+          {
+            id: 2,
+            title: 'Siloam Choir Releases New Album "Come, Lord"',
+            excerpt: 'Siloam Choir has released their new album consisting of 10 songs praising God and spreading His love.',
+            date: 'March 28, 2025',
+            image: '/api/placeholder/400/300'
+          },
+          {
+            id: 3,
+            title: 'Siloam Choir to Perform at Kigali Convention Center',
+            excerpt: 'For the first time, Siloam Choir will perform at the Kigali Convention Center in June.',
+            date: 'March 15, 2025',
+            image: '/api/placeholder/400/300'
+          }
+        ];
+        
+        const videos = [
+          {
+            id: 1,
+            title: 'Nzakumbakumba Live Concert',
+            description: 'Our major concert held in December 2024.',
+            date: 'December 25, 2024',
+            thumbnail: '/api/placeholder/400/300',
+            url: 'https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx/videos'
+          },
+          {
+            id: 2,
+            title: 'Come, Lord - New Album',
+            description: 'Watch the audio and video of our new album "Come, Lord"',
+            date: 'March 20, 2025',
+            thumbnail: '/api/placeholder/400/300',
+            url: 'https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx/videos'
+          },
+          {
+            id: 3,
+            title: 'Sabbath Celebration Concert',
+            description: 'Praising God in song during our Sabbath celebration service.',
+            date: 'February 10, 2025',
+            thumbnail: '/api/placeholder/400/300',
+            url: 'https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx/videos'
+          },
+          {
+            id: 4,
+            title: 'Beautiful Jesus - New Song',
+            description: 'Our new song "Beautiful Jesus" about the love of Jesus Christ.',
+            date: 'January 5, 2025',
+            thumbnail: '/api/placeholder/400/300',
+            url: 'https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx/videos'
+          },
+          {
+            id: 5,
+            title: 'Worship in the Sanctuary',
+            description: 'Concert held at ADEP Kabuga Church sanctuary.',
+            date: 'December 12, 2024',
+            thumbnail: '/api/placeholder/400/300',
+            url: 'https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx/videos'
+          },
+          {
+            id: 6,
+            title: 'Youth Day Special',
+            description: 'Concert held during the youth day celebrations.',
+            date: 'September 30, 2024',
+            thumbnail: '/api/placeholder/400/300',
+            url: 'https://www.youtube.com/@SILOAMCHOIRADEPRKABUGA-rl4hx/videos'
+          }
+        ];
+        
+        const events = [
+          {
+            id: 1,
+            title: '"Light Will Come" Concert',
+            day: '15',
+            month: 'May',
+            time: '15:00 - 18:00',
+            location: 'ADEP Kabuga',
+            description: 'You are all invited to our major concert "Light Will Come" where we will sing songs praising God.'
+          },
+          {
+            id: 2,
+            title: 'Resurrection Concert',
+            day: '30',
+            month: 'May',
+            time: '14:00 - 17:00',
+            location: 'Kigali Conference Center',
+            description: 'Special concert celebrating the resurrection of Jesus Christ. There will be many songs and good news.'
+          },
+          {
+            id: 3,
+            title: 'Siloam 15th Anniversary',
+            day: '20',
+            month: 'June',
+            time: '13:00 - 19:00',
+            location: 'BK Arena Kigali',
+            description: 'Major concert celebrating 15 years of Siloam Choir praising God through music.'
+          }
+        ];
+        
+        const contactForm = ref({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+        
+        const activePage = computed(() => {
+          switch(currentPage.value) {
+            case 'home': return HomePage;
+            case 'about': return AboutPage;
+            case 'videos': return VideosPage;
+            case 'events': return EventsPage;
+            case 'contact': return ContactPage;
+            default: return HomePage;
+          }
+        });
+        
+        const setActivePage = (pageId) => {
+          currentPage.value = pageId;
+          menuActive.value = false;
+          window.scrollTo(0, 0);
+        };
+        
+        const toggleMenu = () => {
+          menuActive.value = !menuActive.value;
+        };
+        const submitForm = () => {
+          alert(`Message sent from ${contactForm.value.name}`);
+          contactForm.value = {
+            name: '',
+            email: '',
+            subject: '',
+            message: ''
+          };
+        };
+        return {
+          navLinks,
+          activePage,
+          setActivePage,
+          toggleMenu,
+          menuActive,
+          latestNews,
+          videos,
+          events,
+          contactForm,
+          submitForm
+        };
+        }
+    });
+    app.mount('#app');
+  </script>
+</body>
+</html>
